@@ -31,15 +31,19 @@ namespace FFmpeg.NET.Enums
 
         static VideoCodec() {
             SettingsCollection = new VideoCodecCollection();
-            SettingsCollection.Add(new VideoCodecEntry("H264") { Encoder = "libx264", FileExtension = ".mp4" });
-            SettingsCollection.Add(new VideoCodecEntry(H265) { Encoder = "libx265", FileExtension = ".mp4" });
-            SettingsCollection.Add(new VideoCodecEntry(HEVC_nvenc) { Encoder = "hevc_nvenc", OutputArgs= "-strict experimental", FileExtension=".mp4" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes422_Proxy) { Encoder = "prores_ks", OutputArgs= "-profile:v 0 -pix_fmt yuv422p10", FileExtension = ".mov" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes422_LT) { Encoder = "prores_ks", OutputArgs = "-profile:v 1 -pix_fmt yuv422p10", FileExtension = ".mov" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes422_Normal) { Encoder = "prores_ks", OutputArgs = "-profile:v 2 -pix_fmt yuv422p10", FileExtension = ".mov" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes422_HQ) { Encoder = "prores_ks", OutputArgs = "-profile:v 3 -pix_fmt yuv422p10", FileExtension = ".mov" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes4444) { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuv444p10", FileExtension = ".mov" });
-            SettingsCollection.Add(new VideoCodecEntry(ProRes4444Alpha) { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuv4444p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("H264") { 
+                Encoder = "libx264", 
+                FileExtension = ".mp4",
+                QualityMode = "crf", QualityMin=0, QualityMax=51, QualityDefault=18
+                });
+            SettingsCollection.Add(new VideoCodecEntry("H265") { Encoder = "libx265", FileExtension = ".mp4" });
+            SettingsCollection.Add(new VideoCodecEntry("HEVC_nvenc") { Encoder = "hevc_nvenc", OutputArgs= "-strict experimental", FileExtension=".mp4" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes422_Proxy") { Encoder = "prores_ks", OutputArgs= "-profile:v 0 -pix_fmt yuv422p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes422_LT") { Encoder = "prores_ks", OutputArgs = "-profile:v 1 -pix_fmt yuv422p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes422_Normal") { Encoder = "prores_ks", OutputArgs = "-profile:v 2 -pix_fmt yuv422p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes422_HQ") { Encoder = "prores_ks", OutputArgs = "-profile:v 3 -pix_fmt yuv422p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes4444") { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuv444p10", FileExtension = ".mov" });
+            SettingsCollection.Add(new VideoCodecEntry("ProRes4444Alpha") { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuv4444p10", FileExtension = ".mov" });
         }
 
         public static VideoCodecEntry Settings(string codecName)
@@ -80,13 +84,17 @@ namespace FFmpeg.NET.Enums
         /// <summary>
         /// Additional codec specific arguments to be added to the output arguments
         /// </summary>
-        public string OutputArgs { get; set; }
+        public string OutputArgs { get; set; } = "";
 
         /// <summary>
         /// Default file extension
         /// </summary>
         public string FileExtension { get; set; }
 
+        public string QualityMode {get; set;} = "crf";
+        public int QualityMin {get;set;} = 0;
+        public int QualityMax {get;set;} = 51;
+        public int QualityDefault {get;set;} = 18;
 
         /// <summary>
         /// Summary of various codec specific settings to be used with ffmpeg.

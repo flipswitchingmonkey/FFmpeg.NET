@@ -72,6 +72,23 @@ namespace FFmpeg.NET
                 return commandBuilder.ToString();
             }
 
+            // Video Encoder
+            if (conversionOptions.VideoEncoder != null)
+            {
+                var encoderDefaults = VideoCodec.Settings(conversionOptions.VideoEncoder);
+                commandBuilder.AppendFormat(" -c:v {0} {1}", encoderDefaults.Encoder, encoderDefaults.OutputArgs);
+                if (encoderDefaults.QualityMode != null)
+                {
+                    if (conversionOptions.Quality >= encoderDefaults.QualityMin && conversionOptions.Quality <= encoderDefaults.QualityMax) {
+                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.Quality.ToString());
+                    }
+                    else
+                    {
+                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, encoderDefaults.QualityDefault.ToString());
+                    }
+                }
+            }
+
             // Audio bit rate
             if (conversionOptions.AudioBitRate != null)
                 commandBuilder.AppendFormat(" -ab {0}k", conversionOptions.AudioBitRate);

@@ -4,7 +4,14 @@ using FFmpeg.NET.Enums;
 namespace FFmpeg.NET
 {
     public class ConversionOptions
-    {
+    {   
+        /// <summary>
+        ///     Specify video encoder specific settings from the list of VideoCodec enums (or define your own VideoCodecEntry)
+        /// </summary>
+        public string VideoEncoder { get; set; } = "H264";
+
+        //public string QualityMode { get; set; } = "crf";
+        public int Quality { get; set; } = 20;
         /// <summary>
         ///     Audio bit rate
         /// </summary>

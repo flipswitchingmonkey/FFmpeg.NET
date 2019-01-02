@@ -16,6 +16,7 @@ namespace FFmpeg.NET
             var argumentBuilder = new FFmpegArgumentBuilder();
             var arguments = argumentBuilder.Build(parameters);
             var startInfo = GenerateStartInfo(ffmpegFilePath, arguments);
+            Debug.WriteLine($"ffmpeg arguments: {arguments}");
             await ExecuteAsync(startInfo, parameters, cancellationToken);
         }
 
