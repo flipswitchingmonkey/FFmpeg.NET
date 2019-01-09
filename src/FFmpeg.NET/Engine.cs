@@ -65,6 +65,20 @@ namespace FFmpeg.NET
             return parameters.OutputFile;
         }
 
+        public string GetConversionString(MediaFile input, MediaFile output, ConversionOptions options)
+        {
+            var parameters = new FFmpegParameters
+            {
+                Task = FFmpegTask.Convert,
+                InputFile = input,
+                OutputFile = output,
+                ConversionOptions = options
+            };
+            var argumentBuilder = new FFmpegArgumentBuilder();
+            var arguments = argumentBuilder.Build(parameters);
+            return arguments;
+        }
+
         private async Task ExecuteAsync(FFmpegParameters parameters, CancellationToken cancellationToken = default)
         {
             var ffmpegProcess = new FFmpegProcess();

@@ -13,6 +13,7 @@ namespace FFmpeg.NET.Extensions
             if (cancellationToken != default)
                 cancellationToken.Register(tcs.SetCanceled);
 
+            cancellationToken.Register(() => process.Kill());
             process.EnableRaisingEvents = true;
             process.Exited += (sender, e) =>
             {
@@ -26,7 +27,7 @@ namespace FFmpeg.NET.Extensions
                 tcs.TrySetException(new InvalidOperationException($"Could not start process {process}"));
 
             process.BeginErrorReadLine();
-
+            
             return tcs.Task;
         }
     }

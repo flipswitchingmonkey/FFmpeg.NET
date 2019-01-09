@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 namespace FFmpeg.NET.Enums
 {
@@ -69,6 +70,7 @@ namespace FFmpeg.NET.Enums
         }
     }
 
+    [Serializable]
     public class VideoCodecEntry
     {
         /// <summary>
