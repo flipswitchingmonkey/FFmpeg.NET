@@ -10,6 +10,11 @@ namespace FFmpeg.NET
         /// </summary>
         public string VideoEncoder { get; set; } = "H264";
 
+        /// <summary>
+        ///     Input frame rate
+        /// </summary>
+        public string InputFps { get; set; } = null;
+
         //public string QualityMode { get; set; } = "crf";
         public int Quality { get; set; } = 20;
         /// <summary>
@@ -56,7 +61,8 @@ namespace FFmpeg.NET
         /// <summary>
         ///     Video frame rate
         /// </summary>
-        public int? VideoFps { get; set; } = null;
+        //public int? VideoFps { get; set; } = null;
+        public string VideoFps { get; set; } = null;
 
         /// <summary>
         ///     Video sizes

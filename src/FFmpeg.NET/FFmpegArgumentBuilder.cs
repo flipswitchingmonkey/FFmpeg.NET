@@ -50,6 +50,10 @@ namespace FFmpeg.NET
             if (conversionOptions == null)
                 return commandBuilder.AppendFormat(" -i \"{0}\" \"{1}\" ", inputFile.FileInfo.FullName, outputFile.FileInfo.FullName).ToString();
 
+            // Input frame rate
+            if (conversionOptions.InputFps != null)
+                commandBuilder.AppendFormat(CultureInfo.InvariantCulture, " -framerate {0} ", conversionOptions.InputFps.ToString());
+
             // Media seek position
             if (conversionOptions.Seek != null)
                 commandBuilder.AppendFormat(CultureInfo.InvariantCulture, " -ss {0} ", conversionOptions.Seek.Value.TotalSeconds);
