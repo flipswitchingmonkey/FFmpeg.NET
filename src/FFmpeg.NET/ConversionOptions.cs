@@ -11,6 +11,11 @@ namespace FFmpeg.NET
         public string VideoEncoder { get; set; } = "H264";
 
         /// <summary>
+        ///     Specify video encoder specific settings from the list of VideoCodec enums (or define your own VideoCodecEntry)
+        /// </summary>
+        public string AudioEncoder { get; set; } = "AAC";
+
+        /// <summary>
         ///     Input frame rate
         /// </summary>
         public string InputFps { get; set; } = null;
