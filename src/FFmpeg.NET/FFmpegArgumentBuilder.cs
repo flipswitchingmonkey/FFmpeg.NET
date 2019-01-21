@@ -60,6 +60,15 @@ namespace FFmpeg.NET
 
             commandBuilder.AppendFormat(" -i \"{0}\" ", inputFile.FileInfo.FullName);
 
+            if (conversionOptions.SecondInput != null)
+            {
+                commandBuilder.AppendFormat(" -i \"{0}\" ", conversionOptions.SecondInput.FileInfo.FullName);
+            }
+
+            foreach (var mapping in conversionOptions.Mappings)
+            {
+                commandBuilder.AppendFormat(" -{0} ", mapping.ToString());
+            }
             // Physical media conversion (DVD etc)
             if (conversionOptions.Target != Target.Default)
             {
@@ -79,12 +88,12 @@ namespace FFmpeg.NET
             // Video Encoder
             if (conversionOptions.VideoEncoder != null)
             {
-                var encoderDefaults = VideoCodec.Settings(conversionOptions.VideoEncoder);
+                var encoderDefaults = conversionOptions.VideoEncoder;
                 commandBuilder.AppendFormat(" -c:v {0} {1}", encoderDefaults.Encoder, encoderDefaults.OutputArgs);
                 if (encoderDefaults.QualityMode != null)
                 {
-                    if (conversionOptions.Quality >= encoderDefaults.QualityMin && conversionOptions.Quality <= encoderDefaults.QualityMax) {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.Quality.ToString());
+                    if (conversionOptions.QualityVideo >= encoderDefaults.QualityMin && conversionOptions.QualityVideo <= encoderDefaults.QualityMax) {
+                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.QualityVideo.ToString());
                     }
                     else
                     {
@@ -96,13 +105,13 @@ namespace FFmpeg.NET
             // Audio Encoder
             if (conversionOptions.AudioEncoder != null)
             {
-                var encoderDefaults = AudioCodec.Settings(conversionOptions.AudioEncoder);
+                var encoderDefaults = conversionOptions.AudioEncoder;
                 commandBuilder.AppendFormat(" -c:a {0} {1}", encoderDefaults.Encoder, encoderDefaults.OutputArgs);
                 if (encoderDefaults.QualityMode != null)
                 {
-                    if (conversionOptions.Quality >= encoderDefaults.QualityMin && conversionOptions.Quality <= encoderDefaults.QualityMax)
+                    if (conversionOptions.QualityAudio >= encoderDefaults.QualityMin && conversionOptions.QualityAudio <= encoderDefaults.QualityMax)
                     {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.Quality.ToString());
+                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.QualityAudio.ToString());
                     }
                     else
                     {
@@ -130,6 +139,29 @@ namespace FFmpeg.NET
             // Video frame rate
             if (conversionOptions.VideoFps != null)
                 commandBuilder.AppendFormat(" -r {0} ", conversionOptions.VideoFps);
+
+            // Video Filters
+
+            if (conversionOptions.VideoFilters.Count > 0)
+            {
+                string vf = " -vf \"";
+                for (int i = 0; i < conversionOptions.VideoFilters.Count; i++)
+                {
+                    vf += conversionOptions.VideoFilters[i];
+                    if (i < conversionOptions.VideoFilters.Count-1)
+                    {
+                        vf += ",";
+                    }
+                }
+                //foreach(var filter in conversionOptions.VideoFilters)
+                //{
+                //    vf += filter;
+                //    vf += ",";
+                //}
+                //vf.Remove(vf.Length - 2, 1);
+                vf += "\" ";
+                commandBuilder.AppendFormat(vf);
+            }
 
             // Video size / resolution
             if (conversionOptions.VideoSize == VideoSize.Custom)

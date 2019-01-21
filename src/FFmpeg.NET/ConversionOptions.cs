@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FFmpeg.NET.Enums;
 
 namespace FFmpeg.NET
@@ -8,20 +9,36 @@ namespace FFmpeg.NET
         /// <summary>
         ///     Specify video encoder specific settings from the list of VideoCodec enums (or define your own VideoCodecEntry)
         /// </summary>
-        public string VideoEncoder { get; set; } = "H264";
+        public VideoCodecEntry VideoEncoder { get; set; } = VideoCodec.Settings(VideoCodec.Default);
 
         /// <summary>
         ///     Specify video encoder specific settings from the list of VideoCodec enums (or define your own VideoCodecEntry)
         /// </summary>
-        public string AudioEncoder { get; set; } = "AAC";
+        public AudioCodecEntry AudioEncoder { get; set; } = AudioCodec.Settings(AudioCodec.Default);
+
+        /// <summary>
+        ///     Second input file, e.g. a replacement audio track
+        /// </summary>
+        public MediaFile SecondInput { get; set; }
+
+        /// <summary>
+        ///     Map channels
+        /// </summary>
+        public List<ChannelMapping> Mappings { get; set; } = new List<ChannelMapping>();
+
+        /// <summary>
+        ///     Video Filters
+        /// </summary>
+        public List<string> VideoFilters { get; set; } = new List<string>();
+
 
         /// <summary>
         ///     Input frame rate
         /// </summary>
         public string InputFps { get; set; } = null;
 
-        //public string QualityMode { get; set; } = "crf";
-        public int Quality { get; set; } = 20;
+        public int QualityVideo { get; set; } = 20;
+        public int QualityAudio { get; set; } = 20;
         /// <summary>
         ///     Audio bit rate
         /// </summary>

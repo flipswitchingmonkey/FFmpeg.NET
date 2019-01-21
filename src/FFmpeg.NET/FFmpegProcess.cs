@@ -38,7 +38,7 @@ namespace FFmpeg.NET
                 }
                 else
                 {
-                    OnConversionCompleted(new ConversionCompleteEventArgs(parameters.InputFile, parameters.OutputFile));
+                    OnConversionCompleted(new ConversionCompleteEventArgs(parameters.InputFile, parameters.OutputFile, messages));
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace FFmpeg.NET
         {
             var exceptionMessage = GetExceptionMessage(messages);
             var exception = new FFmpegException(exceptionMessage, caughtException, exitCode);
-            OnConversionError(new ConversionErrorEventArgs(exception, parameters.InputFile, parameters.OutputFile));
+            OnConversionError(new ConversionErrorEventArgs(exception, parameters.InputFile, parameters.OutputFile, messages));
         }
 
         private string GetExceptionMessage(List<string> messages) 

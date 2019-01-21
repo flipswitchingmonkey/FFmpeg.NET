@@ -18,7 +18,8 @@ namespace FFmpeg.NET.Enums
     {
         public static AudioCodecCollection SettingsCollection;
 
-        public static string AAC { get { return "AAC"; } }
+        public static string AAC_VBR { get { return "AAC-VBR"; } }
+        public static string AAC_CBR { get { return "AAC-CBR"; } }
         public static string Vorbis { get { return "Vorbis"; } }
         public static string FLAC { get { return "FLAC"; } }
         public static string WavPack { get { return "WavPack"; } }
@@ -26,18 +27,19 @@ namespace FFmpeg.NET.Enums
         public static string MP2 { get { return "MP2"; } }
         public static string MP3 { get { return "MP3"; } }
         public static string Copy { get { return "Copy"; } }
-        public static string Default = AAC;
+        public static string Default = AAC_VBR;
 
         static AudioCodec() {
             SettingsCollection = new AudioCodecCollection();
-            SettingsCollection.Add(new AudioCodecEntry("AAC") {Encoder = "aac", FileExtension = ".m4a", QualityMode = "q", QualityMin=32, QualityMax=320, QualityDefault=128, QualityStep=8});
-            SettingsCollection.Add(new AudioCodecEntry("MP3") { Encoder = "libmp3lame", FileExtension = ".mp3", QualityMode = "b", QualityMin = 32, QualityMax = 320, QualityDefault = 160, QualityStep = 8 });
-            SettingsCollection.Add(new AudioCodecEntry("FLAC") { Encoder = "flac", FileExtension = ".flac", QualityMode= "compression_level", QualityMin = 0, QualityMax = 12, QualityDefault = 5 });
-            SettingsCollection.Add(new AudioCodecEntry("Vorbis") { Encoder = "libvorbis", FileExtension = ".ogg", QualityMode = "q", QualityMin = 0, QualityMax = 10, QualityDefault = 3 });
-            SettingsCollection.Add(new AudioCodecEntry("WavPack") { Encoder = "wavpack", FileExtension = ".wv", QualityMode = "compression_level", QualityMin = 0, QualityMax = 8, QualityDefault = 0 });
-            SettingsCollection.Add(new AudioCodecEntry("Opus") { Encoder = "libopus", FileExtension=".opus", QualityMode = "b", QualityMin = 32000, QualityMax = 320000, QualityDefault = 128000, QualityStep = 8000 });
-            SettingsCollection.Add(new AudioCodecEntry("MP2") { Encoder = "libtwolame", FileExtension = ".m2a", QualityMode = "b", QualityMin = 32, QualityMax = 320, QualityDefault = 128, QualityStep = 8 });
             SettingsCollection.Add(new AudioCodecEntry("Copy") { Encoder = "copy", FileExtension = null, QualityMode=null });
+            SettingsCollection.Add(new AudioCodecEntry("AAC-CBR") {Encoder = "aac", FileExtension = ".m4a", QualityMode = "b:a", QualityMin = 32000, QualityMax = 320000, QualityDefault = 128000, QualityStep = 8000 });
+            SettingsCollection.Add(new AudioCodecEntry("AAC-VBR") { Encoder = "aac", FileExtension = ".m4a", QualityMode = "q:a", QualityMin = 32, QualityMax = 320, QualityDefault = 128, QualityStep = 8 });
+            SettingsCollection.Add(new AudioCodecEntry("MP3") { Encoder = "libmp3lame", FileExtension = ".mp3", QualityMode = "b:a", QualityMin = 32, QualityMax = 320, QualityDefault = 160, QualityStep = 8 });
+            SettingsCollection.Add(new AudioCodecEntry("FLAC") { Encoder = "flac", FileExtension = ".flac", OutputArgs="-strict experimental", QualityMode= "compression_level", QualityMin = 0, QualityMax = 12, QualityDefault = 5 });
+            SettingsCollection.Add(new AudioCodecEntry("Vorbis") { Encoder = "libvorbis", FileExtension = ".ogg", QualityMode = "q:a", QualityMin = 0, QualityMax = 10, QualityDefault = 3 });
+            SettingsCollection.Add(new AudioCodecEntry("WavPack") { Encoder = "wavpack", FileExtension = ".wv", QualityMode = "compression_level", QualityMin = 0, QualityMax = 8, QualityDefault = 0 });
+            SettingsCollection.Add(new AudioCodecEntry("Opus") { Encoder = "libopus", FileExtension=".opus", OutputArgs = "-strict experimental", QualityMode = "b:a", QualityMin = 32000, QualityMax = 320000, QualityDefault = 128000, QualityStep = 8000 });
+            SettingsCollection.Add(new AudioCodecEntry("MP2") { Encoder = "libtwolame", FileExtension = ".m2a", QualityMode = "b:a", QualityMin = 32, QualityMax = 320, QualityDefault = 128, QualityStep = 8 });
         }
 
         public static AudioCodecEntry Settings(string codecName)
