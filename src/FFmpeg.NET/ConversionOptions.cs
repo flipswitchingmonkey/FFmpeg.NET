@@ -22,6 +22,11 @@ namespace FFmpeg.NET
         public MediaFile SecondInput { get; set; }
 
         /// <summary>
+        ///     Arguments to be inserted immediately after ffmpeg, before first input
+        /// </summary>
+        public string PreArgs { get; set; }
+
+        /// <summary>
         ///     Map channels
         /// </summary>
         public List<ChannelMapping> Mappings { get; set; } = new List<ChannelMapping>();

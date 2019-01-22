@@ -50,6 +50,9 @@ namespace FFmpeg.NET
             if (conversionOptions == null)
                 return commandBuilder.AppendFormat(" -i \"{0}\" \"{1}\" ", inputFile.FileInfo.FullName, outputFile.FileInfo.FullName).ToString();
 
+            if (conversionOptions.PreArgs != null)
+                commandBuilder.AppendFormat(" {0} ", conversionOptions.PreArgs);
+
             // Input frame rate
             if (conversionOptions.InputFps != null)
                 commandBuilder.AppendFormat(CultureInfo.InvariantCulture, " -framerate {0} ", conversionOptions.InputFps.ToString());
@@ -140,29 +143,6 @@ namespace FFmpeg.NET
             if (conversionOptions.VideoFps != null)
                 commandBuilder.AppendFormat(" -r {0} ", conversionOptions.VideoFps);
 
-            // Video Filters
-
-            if (conversionOptions.VideoFilters.Count > 0)
-            {
-                string vf = " -vf \"";
-                for (int i = 0; i < conversionOptions.VideoFilters.Count; i++)
-                {
-                    vf += conversionOptions.VideoFilters[i];
-                    if (i < conversionOptions.VideoFilters.Count-1)
-                    {
-                        vf += ",";
-                    }
-                }
-                //foreach(var filter in conversionOptions.VideoFilters)
-                //{
-                //    vf += filter;
-                //    vf += ",";
-                //}
-                //vf.Remove(vf.Length - 2, 1);
-                vf += "\" ";
-                commandBuilder.AppendFormat(vf);
-            }
-
             // Video size / resolution
             if (conversionOptions.VideoSize == VideoSize.Custom)
             {
@@ -178,6 +158,23 @@ namespace FFmpeg.NET
 
                 commandBuilder.AppendFormat(" -s {0} ", size);
             }
+
+            // Video Filters
+            if (conversionOptions.VideoFilters.Count > 0)
+            {
+                string vf = " -vf \"";
+                for (int i = 0; i < conversionOptions.VideoFilters.Count; i++)
+                {
+                    vf += conversionOptions.VideoFilters[i];
+                    if (i < conversionOptions.VideoFilters.Count - 1)
+                    {
+                        vf += ",";
+                    }
+                }
+                vf += "\" ";
+                commandBuilder.AppendFormat(vf);
+            }
+
 
             // Video aspect ratio
             if (conversionOptions.VideoAspectRatio != VideoAspectRatio.Default)
