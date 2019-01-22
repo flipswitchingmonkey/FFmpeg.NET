@@ -96,11 +96,23 @@ namespace FFmpeg.NET
                 if (encoderDefaults.QualityMode != null)
                 {
                     if (conversionOptions.QualityVideo >= encoderDefaults.QualityMin && conversionOptions.QualityVideo <= encoderDefaults.QualityMax) {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.QualityVideo.ToString());
+                        commandBuilder.AppendFormat(" -{0} {1}{2}", encoderDefaults.QualityMode, conversionOptions.QualityVideo.ToString(), encoderDefaults.QualityPostfix);
                     }
                     else
                     {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, encoderDefaults.QualityDefault.ToString());
+                        commandBuilder.AppendFormat(" -{0} {1}{2}", encoderDefaults.QualityMode, encoderDefaults.QualityDefault.ToString(), encoderDefaults.QualityPostfix);
+                    }
+                    if (conversionOptions.VideoMinBitRate != null)
+                    {
+                        commandBuilder.AppendFormat(" -minrate {0}{1}", conversionOptions.VideoMinBitRate.ToString(), encoderDefaults.QualityPostfix);
+                    }
+                    if (conversionOptions.VideoMaxBitRate != null)
+                    {
+                        commandBuilder.AppendFormat(" -maxrate {0}{1}", conversionOptions.VideoMaxBitRate.ToString(), encoderDefaults.QualityPostfix);
+                    }
+                    if (conversionOptions.VideoBufferBitRate != null)
+                    {
+                        commandBuilder.AppendFormat(" -bufsize {0}{1}", conversionOptions.VideoBufferBitRate.ToString(), encoderDefaults.QualityPostfix);
                     }
                 }
             }

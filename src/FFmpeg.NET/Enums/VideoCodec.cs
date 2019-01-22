@@ -19,6 +19,7 @@ namespace FFmpeg.NET.Enums
         public static VideoCodecCollection SettingsCollection;
 
         public static string H264 { get { return "H264"; } }
+        public static string H264_constant { get { return "H264_constant"; } }
         public static string H265 { get { return "H265"; } }
         public static string H264_nvenc { get { return "H264_nvenc"; } }
         public static string HEVC_nvenc { get { return "HEVC_nvenc"; } }
@@ -56,6 +57,7 @@ namespace FFmpeg.NET.Enums
             SettingsCollection.Add(new VideoCodecEntry("HapQ") { Encoder = "hap", OutputArgs = "-format hap_q", FileExtension = ".mov", QualityMode = "chunks", QualityMin = 1, QualityMax = 64, QualityDefault = 1 });
             //SettingsCollection.Add(new VideoCodecEntry("PNG") { Encoder = "png", FileExtension = ".png" });
             //SettingsCollection.Add(new VideoCodecEntry("Jpeg2000") { Encoder = "jpeg2000", OutputArgs = "-format jp2", FileExtension = ".jp2", QualityMode = "q", QualityMin = 1, QualityMax = 31, QualityDefault = 5 });
+            SettingsCollection.Add(new VideoCodecEntry("H264_constant") { Encoder = "libx264", FileExtension = ".mp4", OutputArgs = "-x264opts nal-hrd=cbr:force-cfr=1", QualityMode = "b:v", QualityMin = 100, QualityMax = 32000, QualityDefault = 1500, QualityStep = 100, QualityPostfix="k", MinBitRate=0, MaxBitRate=0, BufferBitRate=-1 });
             SettingsCollection.Add(new VideoCodecEntry("Theora") { Encoder = "libtheora", FileExtension = ".ogv", QualityMode = "q", QualityMin = 0, QualityMax = 10, QualityDefault = 5 });
             SettingsCollection.Add(new VideoCodecEntry("VP9") { Encoder = "libvpx-vp9", FileExtension = ".webm", OutputArgs = "-pix_fmt yuv420p", QualityMode = "crf", QualityMin = 0, QualityMax = 63, QualityDefault = 25 });
         }
@@ -111,7 +113,10 @@ namespace FFmpeg.NET.Enums
         public int QualityMax {get;set;} = 51;
         public int QualityDefault {get;set;} = 18;
         public int QualityStep { get; set; } = 1;
-
+        public string QualityPostfix { get; set; } = "";
+        public int? MinBitRate { get; set; } = null;
+        public int? MaxBitRate { get; set; } = null;
+        public int? BufferBitRate { get; set; } = null;
         /// <summary>
         /// Summary of various codec specific settings to be used with ffmpeg.
         /// </summary>

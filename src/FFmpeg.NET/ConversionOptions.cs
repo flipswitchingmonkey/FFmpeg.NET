@@ -84,6 +84,9 @@ namespace FFmpeg.NET
         ///     Video bit rate in kbit/s
         /// </summary>
         public int? VideoBitRate { get; set; } = null;
+        public int? VideoMinBitRate { get; set; } = null;
+        public int? VideoMaxBitRate { get; set; } = null;
+        public int? VideoBufferBitRate { get; set; } = null;
 
         /// <summary>
         ///     Video frame rate

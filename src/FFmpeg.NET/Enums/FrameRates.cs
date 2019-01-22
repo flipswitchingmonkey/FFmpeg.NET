@@ -18,6 +18,8 @@ namespace FFmpeg.NET.Enums
             FrameRateCollection.Add(new FrameRateEntry("30", "30"));
             FrameRateCollection.Add(new FrameRateEntry("50", "50"));
             FrameRateCollection.Add(new FrameRateEntry("60", "60"));
+            FrameRateCollection.Add(new FrameRateEntry("100", "100"));
+            FrameRateCollection.Add(new FrameRateEntry("120", "120"));
         }
 
         public class FrameRateCollectionType : KeyedCollection<string, FrameRateEntry>
@@ -29,6 +31,7 @@ namespace FFmpeg.NET.Enums
             }
         }
 
+        [Serializable]
         public class FrameRateEntry
         {
             public string Key { get; set; }
@@ -55,6 +58,10 @@ namespace FFmpeg.NET.Enums
                 DisplayName = name;
                 CommandName = cmd;
                 Key = key;
+            }
+            public override string ToString()
+            {
+                return DisplayName;
             }
         }
     }
