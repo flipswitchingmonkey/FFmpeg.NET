@@ -24,7 +24,12 @@ namespace FFmpeg.NET
         /// <summary>
         ///     Arguments to be inserted immediately after ffmpeg, before first input
         /// </summary>
-        public string PreArgs { get; set; }
+        public string PreArgs { get; set; } = null;
+
+        /// <summary>
+        ///     Explicitely sets the timecode of the first frame
+        /// </summary>
+        public string TimeCode { get; set; } = null;
 
         /// <summary>
         ///     Map channels

@@ -53,6 +53,16 @@ namespace FFmpeg.NET
             if (conversionOptions.PreArgs != null)
                 commandBuilder.AppendFormat(" {0} ", conversionOptions.PreArgs);
 
+            //if (conversionOptions.PreArgs.Count > 0)
+            //{
+            //    string preargs = "";
+            //    for (int i = 0; i < conversionOptions.PreArgs.Count; i++)
+            //    {
+            //        preargs += $" {conversionOptions.PreArgs[i]} ";
+            //    }
+            //    commandBuilder.AppendFormat(preargs);
+            //}
+
             // Input frame rate
             if (conversionOptions.InputFps != null)
                 commandBuilder.AppendFormat(CultureInfo.InvariantCulture, " -framerate {0} ", conversionOptions.InputFps.ToString());
@@ -83,9 +93,14 @@ namespace FFmpeg.NET
                     return commandBuilder.ToString();
                 }
 
-                commandBuilder.AppendFormat("{0} \"{1}\" ", conversionOptions.Target.ToString().ToLowerInvariant(), outputFile.FileInfo.FullName);
+                commandBuilder.AppendFormat(" {0} \"{1}\" ", conversionOptions.Target.ToString().ToLowerInvariant(), outputFile.FileInfo.FullName);
 
                 return commandBuilder.ToString();
+            }
+
+            if (conversionOptions.TimeCode != null)
+            {
+                commandBuilder.AppendFormat(" -timecode {0} ", conversionOptions.TimeCode);
             }
 
             // Video Encoder
@@ -120,17 +135,24 @@ namespace FFmpeg.NET
             // Audio Encoder
             if (conversionOptions.AudioEncoder != null)
             {
-                var encoderDefaults = conversionOptions.AudioEncoder;
-                commandBuilder.AppendFormat(" -c:a {0} {1}", encoderDefaults.Encoder, encoderDefaults.OutputArgs);
-                if (encoderDefaults.QualityMode != null)
+                if (conversionOptions.AudioEncoder.Encoder == AudioCodec.None)
                 {
-                    if (conversionOptions.QualityAudio >= encoderDefaults.QualityMin && conversionOptions.QualityAudio <= encoderDefaults.QualityMax)
+                    commandBuilder.AppendFormat(" -an");
+                }
+                else
+                {
+                    var encoderDefaults = conversionOptions.AudioEncoder;
+                    commandBuilder.AppendFormat(" -c:a {0} {1}", encoderDefaults.Encoder, encoderDefaults.OutputArgs);
+                    if (encoderDefaults.QualityMode != null)
                     {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, conversionOptions.QualityAudio.ToString());
-                    }
-                    else
-                    {
-                        commandBuilder.AppendFormat(" -{0} {1}", encoderDefaults.QualityMode, encoderDefaults.QualityDefault.ToString());
+                        if (conversionOptions.QualityAudio >= encoderDefaults.QualityMin && conversionOptions.QualityAudio <= encoderDefaults.QualityMax)
+                        {
+                            commandBuilder.AppendFormat(" -{0} {1}{2}", encoderDefaults.QualityMode, conversionOptions.QualityAudio.ToString(), encoderDefaults.QualityPostfix);
+                        }
+                        else
+                        {
+                            commandBuilder.AppendFormat(" -{0} {1}{2}", encoderDefaults.QualityMode, encoderDefaults.QualityDefault.ToString(), encoderDefaults.QualityPostfix);
+                        }
                     }
                 }
             }

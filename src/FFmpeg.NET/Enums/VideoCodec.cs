@@ -29,6 +29,12 @@ namespace FFmpeg.NET.Enums
         public static string ProRes422_HQ { get { return "ProRes422_HQ"; } }
         public static string ProRes4444 { get { return "ProRes4444"; } }
         public static string ProRes4444Alpha { get { return "ProRes4444Alpha"; } }
+        public static string DNxHD { get { return "DNxHD"; } }
+        public static string DNxHR_444 { get { return "DNxHR_444"; } }
+        public static string DNxHR_HQX { get { return "DNxHR_HQX"; } }
+        public static string DNxHR_HQ { get { return "DNxHR_HQ"; } }
+        public static string DNxHR_SQ { get { return "DNxHR_SQ"; } }
+        public static string DNxHR_LB { get { return "DNxHR_LB"; } }
         public static string Hap { get { return "Hap"; } }
         public static string Hap_Alpha { get { return "Hap_Alpha"; } }
         public static string HapQ { get { return "HapQ"; } }
@@ -52,6 +58,12 @@ namespace FFmpeg.NET.Enums
             SettingsCollection.Add(new VideoCodecEntry("ProRes422_HQ") { Encoder = "prores_ks", OutputArgs = "-profile:v 3 -pix_fmt yuv422p10", FileExtension = ".mov", QualityMode = "qscale", QualityMin = 0, QualityMax = 32, QualityDefault = 9 });
             SettingsCollection.Add(new VideoCodecEntry("ProRes4444") { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuv444p10", FileExtension = ".mov", QualityMode = "qscale", QualityMin = 0, QualityMax = 32, QualityDefault = 9 });
             SettingsCollection.Add(new VideoCodecEntry("ProRes4444Alpha") { Encoder = "prores_ks", OutputArgs = "-profile:v 4 -pix_fmt yuva444p10le -alpha_bits 16", FileExtension = ".mov", QualityMode = "qscale", QualityMin = 0, QualityMax = 32, QualityDefault = 9 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHD") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhd ", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix="M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHR_444") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhr_444 -pix_fmt yuv444p10le", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix = "M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHR_HQX") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhr_hqx -pix_fmt yuv422p10le", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix = "M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHR_HQ") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhr_hq ", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix = "M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHR_SQ") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhr_sq ", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix = "M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
+            SettingsCollection.Add(new VideoCodecEntry("DNxHR_LB") { Encoder = "dnxhd", OutputArgs = "-profile:v dnxhr_lb ", FileExtension = ".mxf", QualityMode = "b:v", QualityPostfix = "M", QualityMin = 1, QualityMax = 440, QualityDefault = 145 });
             SettingsCollection.Add(new VideoCodecEntry("Hap") { Encoder = "hap", OutputArgs = "-format hap", FileExtension = ".mov", QualityMode = "chunks", QualityMin = 1, QualityMax = 64, QualityDefault = 1 });
             SettingsCollection.Add(new VideoCodecEntry("Hap_Alpha") { Encoder = "hap", OutputArgs = "-format hap_alpha", FileExtension = ".mov", QualityMode = "chunks", QualityMin = 1, QualityMax = 64, QualityDefault = 1 });
             SettingsCollection.Add(new VideoCodecEntry("HapQ") { Encoder = "hap", OutputArgs = "-format hap_q", FileExtension = ".mov", QualityMode = "chunks", QualityMin = 1, QualityMax = 64, QualityDefault = 1 });

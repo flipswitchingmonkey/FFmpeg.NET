@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace FFmpeg.NET.Enums
@@ -18,6 +19,20 @@ namespace FFmpeg.NET.Enums
     {
         public static AudioCodecCollection SettingsCollection;
 
+        public static KeyValuePair<string, AudioSampleRate>[] sampleRates = {
+            new KeyValuePair<string, AudioSampleRate>("Default", AudioSampleRate.Default),
+            new KeyValuePair<string, AudioSampleRate>("22KHz", AudioSampleRate.Hz22050),
+            new KeyValuePair<string, AudioSampleRate>("44KHz", AudioSampleRate.Hz44100),
+            new KeyValuePair<string, AudioSampleRate>("48KHz", AudioSampleRate.Hz48000)
+        };
+        public static KeyValuePair<string, AudioSampleRate>[] SampleRates
+        {
+            get
+            {
+                return sampleRates;
+            }
+        }
+
         public static string AAC_VBR { get { return "AAC-VBR"; } }
         public static string AAC_CBR { get { return "AAC-CBR"; } }
         public static string Vorbis { get { return "Vorbis"; } }
@@ -27,14 +42,16 @@ namespace FFmpeg.NET.Enums
         public static string MP2 { get { return "MP2"; } }
         public static string MP3 { get { return "MP3"; } }
         public static string Copy { get { return "Copy"; } }
+        public static string None { get { return "None"; } }
         public static string Default = AAC_VBR;
 
         static AudioCodec() {
             SettingsCollection = new AudioCodecCollection();
             SettingsCollection.Add(new AudioCodecEntry("Copy") { Encoder = "copy", FileExtension = null, QualityMode=null });
-            SettingsCollection.Add(new AudioCodecEntry("AAC-CBR") {Encoder = "aac", FileExtension = ".m4a", QualityMode = "b:a", QualityMin = 32000, QualityMax = 320000, QualityDefault = 128000, QualityStep = 8000 });
+            SettingsCollection.Add(new AudioCodecEntry("None") { Encoder = "None", FileExtension = null, QualityMode = null });
+            SettingsCollection.Add(new AudioCodecEntry("AAC-CBR") {Encoder = "aac", FileExtension = ".m4a", QualityMode = "b:a", QualityMin = 32, QualityMax = 320, QualityDefault = 128, QualityPostfix = "K", QualityStep = 8 });
             SettingsCollection.Add(new AudioCodecEntry("AAC-VBR") { Encoder = "aac", FileExtension = ".m4a", QualityMode = "q:a", QualityMin = 32, QualityMax = 320, QualityDefault = 128, QualityStep = 8 });
-            SettingsCollection.Add(new AudioCodecEntry("MP3") { Encoder = "libmp3lame", FileExtension = ".mp3", QualityMode = "b:a", QualityMin = 32, QualityMax = 320, QualityDefault = 160, QualityStep = 8 });
+            SettingsCollection.Add(new AudioCodecEntry("MP3") { Encoder = "libmp3lame", FileExtension = ".mp3", QualityMode = "b:a", QualityMin = 32, QualityMax = 320, QualityDefault = 160, QualityPostfix="K", QualityStep = 8 });
             SettingsCollection.Add(new AudioCodecEntry("FLAC") { Encoder = "flac", FileExtension = ".flac", OutputArgs="-strict experimental", QualityMode= "compression_level", QualityMin = 0, QualityMax = 12, QualityDefault = 5 });
             SettingsCollection.Add(new AudioCodecEntry("Vorbis") { Encoder = "libvorbis", FileExtension = ".ogg", QualityMode = "q:a", QualityMin = 0, QualityMax = 10, QualityDefault = 3 });
             SettingsCollection.Add(new AudioCodecEntry("WavPack") { Encoder = "wavpack", FileExtension = ".wv", QualityMode = "compression_level", QualityMin = 0, QualityMax = 8, QualityDefault = 0 });
@@ -93,6 +110,7 @@ namespace FFmpeg.NET.Enums
         public int QualityMax {get;set;} = 51;
         public int QualityDefault {get;set;} = 18;
         public int QualityStep { get; set; } = 1;
+        public string QualityPostfix { get; set; } = "";
         /// <summary>
         /// Summary of various codec specific settings to be used with ffmpeg.
         /// </summary>

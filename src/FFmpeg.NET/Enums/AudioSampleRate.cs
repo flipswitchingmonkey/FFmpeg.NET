@@ -1,4 +1,6 @@
-﻿namespace FFmpeg.NET.Enums
+﻿using System.Collections.Generic;
+
+namespace FFmpeg.NET.Enums
 {
     public enum AudioSampleRate
     {
@@ -7,4 +9,5 @@
         Hz44100,
         Hz48000
     }
+
 }
