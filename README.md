@@ -1,3 +1,5 @@
+This fork adds a number of additional conversion options, as well as presets for various audio and video encoders. I'm using it for a media encoder app I'm writing currently, so I'm sure a number of these changes may not necessarily make sense for general use, like the quality parameters in the presets, which are used for automatically generated quality sliders.
+
 [<img src="lib/ffmpeg/v4/icon.png" alt="drawing" width="24" height="24" /> FFmpeg.NET](https://github.com/cmxl/FFmpeg.NET)
 ============
 
